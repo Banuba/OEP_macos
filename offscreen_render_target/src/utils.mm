@@ -142,7 +142,7 @@ void* get_pixel_buffer_native(int width, int height)
         kCFAllocatorDefault,
         width,
         height,
-        // We stores data in RGBA. macos defined kCVPixelFormatType_32BGRA but not supported
+        // We get data from oep in RGBA, macos defined kCVPixelFormatType_32RGBA but not supported
         // and we have to choose a different type. This does not in any way affect further
         // processing, inside bytes still remain in the order of the RGBA.
         kCVPixelFormatType_32BGRA,

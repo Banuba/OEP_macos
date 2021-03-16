@@ -204,7 +204,7 @@ namespace bnb
 extern void run_on_main_queue(std::function<void()> f);
 extern void create_context_NS();
 extern void activate_context_NS();
-extern void deactivate_context_NS();
+extern void destroy_context_NS();
 extern void* ns_GL_get_proc_address(const char *name);
 extern void* get_pixel_buffer_native(int width, int height);
 
@@ -223,7 +223,7 @@ namespace bnb
             GL_CALL(glDeleteFramebuffers(1, &m_post_processing_framebuffer));
         }
         delete_textures();
-        deactivate_context_NS();
+        destroy_context_NS();
     }
 
     void offscreen_render_target::delete_textures()
