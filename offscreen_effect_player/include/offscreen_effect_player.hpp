@@ -40,11 +40,6 @@ namespace bnb
         void load_effect(const std::string& effect_path) override;
         void unload_effect() override;
 
-        void pause() override;
-        void resume() override;
-
-        void enable_audio(bool enable) override;
-
         void call_js_method(const std::string& method, const std::string& param) override;
 
     private:

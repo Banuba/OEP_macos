@@ -5,7 +5,7 @@
 
 /**
  * block to return resulted image after processing
- * NOTE: pixelBuffer can be null if frame dropped because of queue or because passed unsupported image format for target image
+ * NOTE: pixelBuffer can be null if frame dropped because of queue or because of passed unsupported image format for target image
  */
 typedef void (^BNBOEPImageReadyBlock)(_Nullable CVPixelBufferRef pixelBuffer);
 
@@ -37,5 +37,10 @@ typedef void (^BNBOEPImageReadyBlock)(_Nullable CVPixelBufferRef pixelBuffer);
  * Deactivate current effect, the same can be reached by loading effect with the empty name via loadEffect
  */
 - (void)unloadEffect;
+
+/**
+ * Let you call methods defined in the active effect's script passing additional data or changing effect's behaviour
+ */
+- (void)callJsMethod:(NSString*)method withParam:(NSString*)param;
 
 @end

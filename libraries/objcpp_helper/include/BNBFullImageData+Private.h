@@ -1,11 +1,9 @@
 #pragma once
 #include <bnb/types/full_image.hpp>
 
-//static_assert(__has_feature(objc_arc), "Djinni requires ARC to be enabled for this file");
-
 @class BNBFullImageData;
 
-namespace bnb::djinni::objcpp
+namespace bnb::objcpp
 {
     class full_image_data
     {
@@ -27,4 +25,4 @@ namespace bnb::djinni::objcpp
         class ObjcProxy;
     };
 
-} // namespace bnb::djinni::objcpp
+} // bnb::objcpp

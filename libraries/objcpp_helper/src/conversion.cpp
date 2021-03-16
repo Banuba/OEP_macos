@@ -1,8 +1,5 @@
 #include "conversion.hpp"
 
-#include <bnb/types/full_image.hpp>
-//#include <bnb/utils/internal/profiler.hpp>
-//#include <bnb/utils/internal/on_scope_exit.hpp>
 #include <bnb/utils/exceptions.hpp>
 
 #include <cmath>

@@ -4,9 +4,7 @@
 #include <conversion.hpp>
 
 
-//static_assert(__has_feature(objc_arc), "Djinni requires ARC to be enabled for this file");
-
-namespace bnb::djinni::objcpp
+namespace bnb::objcpp
 {
     bpc8_image_t::pixel_format_t convert_pixel_format(uint32_t pixel_format)
     {
@@ -108,4 +106,4 @@ namespace bnb::djinni::objcpp
         __builtin_unreachable();
     }
 
-} // namespace ::bnb::djinni::objcpp
+} // bnb::objcpp

@@ -46,7 +46,7 @@
         pixelBuffer = [self convertYUVVideoRangeToARGB:pixelBuffer];
     }
     BNBFullImageData* inputData = [[BNBFullImageData alloc] init:pixelBuffer requireMirroring:(YES) faceOrientation:0 fieldOfView:(float) 60];
-    __block ::bnb::full_image_t image = bnb::djinni::objcpp::full_image_data::toCpp(inputData);
+    __block ::bnb::full_image_t image = bnb::objcpp::full_image_data::toCpp(inputData);
 
     auto image_ptr = std::make_shared<bnb::full_image_t>(std::move(image));
     auto get_pixel_buffer_callback = [image_ptr, completion = Block_copy(completion)](std::optional<pb_sptr> pb) {
@@ -158,6 +158,12 @@
 {
     NSAssert(self->oep != nil, @"No OffscreenEffectPlayer");
     oep->unload_effect();
+}
+
+- (void)callJsMethod:(NSString* _Nonnull)method withParam:(NSString* _Nonnull)param
+{
+    NSAssert(self->oep != nil, @"No OffscreenEffectPlayer");
+    oep->call_js_method(std::string([method UTF8String]), std::string([param UTF8String]));
 }
 
 @end

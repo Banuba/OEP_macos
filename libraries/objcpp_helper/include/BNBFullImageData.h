@@ -1,4 +1,3 @@
-#import <Foundation/Foundation.h>
 #import <CoreVideo/CoreVideo.h>
 
 NS_ASSUME_NONNULL_BEGIN

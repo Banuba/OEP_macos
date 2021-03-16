@@ -57,34 +57,11 @@ namespace interfaces
         virtual void load_effect(const std::string& effect_path) = 0;
 
         /**
-         * Unload effect from cache.
+         * Empty effect loaded. The previous effect stays in the cache.
          * 
          * Example unload_effect()
          */
         virtual void unload_effect() = 0;
-
-        /**
-         * Pause in effect player
-         * 
-         * Example pause()
-         */
-        virtual void pause() = 0;
-
-        /**
-         * Resume in effect player
-         * 
-         * Example resume()
-         */
-        virtual void resume() = 0;
-
-        /**
-         * Enable or disable audio for effect
-         * 
-         * @param enable parameter defining whether to enable or disable audio in effect
-         * 
-         * Example enable_audio(false)
-         */
-        virtual void enable_audio(bool enable) = 0;
 
         /**
          * Call js method defined in config.js file of active effect

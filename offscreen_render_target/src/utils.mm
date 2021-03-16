@@ -50,7 +50,7 @@ enum class vrange
     full_range
 };
 
-CVPixelBufferRef convert_argb_to_nv12(CVPixelBufferRef inputPixelBuffer, vrange range)
+CVPixelBufferRef convert_rgba_to_nv12(CVPixelBufferRef inputPixelBuffer, vrange range)
 {
     CVPixelBufferLockBaseAddress(inputPixelBuffer, kCVPixelBufferLock_ReadOnly);
     unsigned char* baseAddress = (unsigned char*) CVPixelBufferGetBaseAddress(inputPixelBuffer);
@@ -95,7 +95,7 @@ CVPixelBufferRef convert_argb_to_nv12(CVPixelBufferRef inputPixelBuffer, vrange 
         .rowBytes = uvBytesPerRow,
         .data = uvDestPlane};
 
-    const uint8_t permuteMap[4] = {3, 0, 1, 2}; // Convert to ARGB pixel format
+    const uint8_t permuteMap[4] = {3, 0, 1, 2};
 
     static vImage_ARGBToYpCbCr info;
     static dispatch_once_t onceToken;
@@ -142,7 +142,10 @@ void* get_pixel_buffer_native(int width, int height)
         kCFAllocatorDefault,
         width,
         height,
-        kCVPixelFormatType_32ARGB,
+        // We stores data in RGBA. macos defined kCVPixelFormatType_32BGRA but not supported
+        // and we have to choose a different type. This does not in any way affect further
+        // processing, inside bytes still remain in the order of the RGBA.
+        kCVPixelFormatType_32BGRA,
         (__bridge CFDictionaryRef)(cvBufferProperties),
         &pixel_buffer);
 
@@ -158,7 +161,7 @@ void* get_pixel_buffer_native(int width, int height)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     CVPixelBufferUnlockBaseAddress(pixel_buffer, 0);
-    pixel_buffer = convert_argb_to_nv12(pixel_buffer, vrange::full_range);
+    pixel_buffer = convert_rgba_to_nv12(pixel_buffer, vrange::full_range);
 
     return (void*)pixel_buffer;
 }

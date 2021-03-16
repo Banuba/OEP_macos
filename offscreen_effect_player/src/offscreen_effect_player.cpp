@@ -114,21 +114,6 @@ namespace bnb
         load_effect("");
     }
 
-    void offscreen_effect_player::pause()
-    {
-        m_ep->playback_pause();
-    }
-
-    void offscreen_effect_player::resume()
-    {
-        m_ep->playback_play();
-    }
-
-    void offscreen_effect_player::enable_audio(bool enable)
-    {
-        m_ep->enable_audio(enable);
-    }
-
     void offscreen_effect_player::call_js_method(const std::string& method, const std::string& param)
     {
         if (auto e_manager = m_ep->effect_manager()) {

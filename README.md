@@ -11,7 +11,7 @@ Quick start examples for integrating [Banuba SDK on macos](https://docs.banuba.c
     `bnb_viewer_standalone/third/` => `OEP_macos/third`
 5. Copy and Paste your client token into the appropriate section of `OEP_macos/ViewController.swift`
 6. Generate project files by executing the following commands:
-    ##### MacOS build:	
+    ##### MacOS build:
     ```
         cd %path_to_repository%
         mkdir build

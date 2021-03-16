@@ -4,6 +4,7 @@
 
 using oep_image_ready_cb = std::function<void(std::optional<bnb::full_image_t> image)>;
 
+// Lambda gets void* which the CVPixelBufferRef in nv12
 using oep_image_ready_pb_cb = std::function<void(void* image)>;
 
 namespace bnb::interfaces

@@ -5,10 +5,14 @@
 #import <OpenGL/gl.h>
 
 
-NSOpenGLContext *OGL_context;
+NSOpenGLContext *OGL_context = nullptr;
 
 void create_context_NS()
 {
+    if (OGL_context != nil) {
+        return;
+    }
+
     NSOpenGLPixelFormatAttribute pixelFormatAttributes[] = {
         NSOpenGLPFAOpenGLProfile,
         (NSOpenGLPixelFormatAttribute)NSOpenGLProfileVersion4_1Core,
@@ -18,15 +22,15 @@ void create_context_NS()
     };
 
     NSOpenGLPixelFormat *_pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:pixelFormatAttributes];
-	if (_pixelFormat == nil) {
-		NSLog(@"Error: No appropriate pixel format found");
-	}
+    if (_pixelFormat == nil) {
+        NSLog(@"Error: No appropriate pixel format found");
+    }
     OGL_context = [[NSOpenGLContext alloc] initWithFormat:_pixelFormat shareContext:nil];
     [OGL_context makeCurrentContext];
 
-	if (OGL_context == nil) {
-		NSLog(@"Unable to create an OpenGL context. The GPUImage framework requires OpenGL support to work.");
-	}
+    if (OGL_context == nil) {
+        NSLog(@"Unable to create an OpenGL context. The GPUImage framework requires OpenGL support to work.");
+    }
 }
 
 void activate_context_NS()
@@ -40,5 +44,6 @@ void deactivate_context_NS()
 {
     if ([NSOpenGLContext currentContext] == OGL_context) {
         [OGL_context clearCurrentContext];
+        OGL_context = nil;
     }
 }
