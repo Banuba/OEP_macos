@@ -46,7 +46,7 @@
         pixelBuffer = [self convertYUVVideoRangeToARGB:pixelBuffer];
     }
     BNBFullImageData* inputData = [[BNBFullImageData alloc] init:pixelBuffer requireMirroring:(YES) faceOrientation:0 fieldOfView:(float) 60];
-    __block ::bnb::full_image_t image = bnb::objcpp::full_image_data::toCpp(inputData);
+    ::bnb::full_image_t image = bnb::objcpp::full_image_data::toCpp(inputData);
 
     auto image_ptr = std::make_shared<bnb::full_image_t>(std::move(image));
     auto get_pixel_buffer_callback = [image_ptr, completion](std::optional<ipb_sptr> pb) {
@@ -57,10 +57,9 @@
 
                     if (completion) {
                         completion(retBuffer);
-                        if (retBuffer) {
-                            CVPixelBufferRelease(retBuffer);
-                        }
                     }
+
+                    CVPixelBufferRelease(retBuffer);
                 }
             };
             (*pb)->get_image(render_callback, bnb::interfaces::image_format::texture);
