@@ -53,7 +53,7 @@
         if (pb.has_value()) {
             auto render_callback = [completion](void* cv_pixel_buffer_ref) {
                 if (cv_pixel_buffer_ref != nullptr) {
-                    CVPixelBufferRef retBuffer = (__bridge CVPixelBufferRef)cv_pixel_buffer_ref;
+                    CVPixelBufferRef retBuffer = (CVPixelBufferRef)cv_pixel_buffer_ref;
 
                     if (completion) {
                         completion(retBuffer);
