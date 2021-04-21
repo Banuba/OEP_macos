@@ -58,3 +58,29 @@ endfunction()
 function(set_target_folder target folder)
     set_target_properties(${target} PROPERTIES FOLDER ${folder})
 endfunction()
+
+function(collect_public_headers result target)
+    
+    set(all_public_header "")
+    get_target_property(dependency ${target} LINK_LIBRARIES)    
+    foreach(item ${dependency})
+        # message(${item})
+        # message("${item}: ${${item}_public_headers}")
+        list(APPEND all_public_header ${${item}_public_headers})    
+    endforeach()
+    # return values
+    set(${result} ${all_public_header} PARENT_SCOPE)
+endfunction()
+
+function(create_linking_flags result target)
+    
+    set(linking_flags "")
+    get_target_property(dependency ${target} LINK_LIBRARIES)    
+    foreach(item ${dependency})
+        # message(${item})
+        # message("${item}: ${${item}_public_headers}")
+        set(linking_flags "${linking_flags} -l${item}")    
+    endforeach()
+    # return values
+    set(${result} ${linking_flags} PARENT_SCOPE)
+endfunction()
