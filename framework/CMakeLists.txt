@@ -9,7 +9,7 @@ set(APP_HEADER_FILES
 set(APP_SOURCE_FILES
     # ${CMAKE_CURRENT_LIST_DIR}/offscreen_effect_player/dummy.cpp
     ${PROJECT_SOURCE_DIR}/offscreen_effect_player/src/BNBOffscreenEffectPlayer.mm
-    # /Users/vadim.voloshanov/banuba_projects/test/OEP_macos/offscreen_render_target/src/offscreen_render_target.mm
+    # ${PROJECT_SOURCE_DIR}/offscreen_render_target/src/offscreen_render_target.mm
 )
 
 add_library(${FRAMEWORK_NAME} STATIC
