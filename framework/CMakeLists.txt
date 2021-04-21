@@ -1,15 +1,21 @@
 set(FRAMEWORK_NAME "BanubaOEP") 
 
-# cmake_policy(SET CMP0079 NEW)
-
 set(APP_HEADER_FILES
     ${PROJECT_SOURCE_DIR}/offscreen_effect_player/include/BNBOffscreenEffectPlayer.h
 )
 
 set(APP_SOURCE_FILES
-    # ${CMAKE_CURRENT_LIST_DIR}/offscreen_effect_player/dummy.cpp
     ${PROJECT_SOURCE_DIR}/offscreen_effect_player/src/BNBOffscreenEffectPlayer.mm
-    # ${PROJECT_SOURCE_DIR}/offscreen_render_target/src/offscreen_render_target.mm
+    ${PROJECT_SOURCE_DIR}/offscreen_effect_player/src/offscreen_effect_player.cpp
+    ${PROJECT_SOURCE_DIR}/offscreen_effect_player/src/pixel_buffer.cpp
+    ${PROJECT_SOURCE_DIR}/offscreen_render_target/src/offscreen_render_target.mm
+    ${PROJECT_SOURCE_DIR}/offscreen_render_target/src/utils.mm
+    ${PROJECT_SOURCE_DIR}/third/glad/src/glad.c
+    ${PROJECT_SOURCE_DIR}/libraries/utils/ogl_utils/src/program.cpp
+    ${PROJECT_SOURCE_DIR}/libraries/utils/ogl_utils/src/opengl.cpp
+    ${PROJECT_SOURCE_DIR}/libraries/objcpp_helper/src/BNBFullImageData.m
+    ${PROJECT_SOURCE_DIR}/libraries/objcpp_helper/src/BNBFullImageData+Private.mm
+    ${PROJECT_SOURCE_DIR}/libraries/objcpp_helper/src/conversion.cpp
 )
 
 add_library(${FRAMEWORK_NAME} STATIC
@@ -26,9 +32,6 @@ target_link_libraries(${FRAMEWORK_NAME}
 )
 
 set(ST_STATIC_LIB_OUTPUT_DIR ${PROJECT_SOURCE_DIR}/build/framework)
-
-# create_linking_flags(linking_flags ${FRAMEWORK_NAME})
-# set_target_properties(${LibraryId} PROPERTIES XCODE_ATTRIBUTE_OTHER_LIBTOOLFLAGS "-lpostal_peerconnection_static ${linking_flags}")
 
 # collect_public_headers(public_headers ${FRAMEWORK_NAME})
 set(public_headers ${PROJECT_SOURCE_DIR}/offscreen_effect_player/include/BNBOffscreenEffectPlayer.h)

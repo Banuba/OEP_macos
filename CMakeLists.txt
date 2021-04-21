@@ -65,10 +65,6 @@ add_executable(${APP_NAME}
     ${RESOURCES}
 )
 
-# target_link_libraries(${APP_NAME}
-#     offscreen_ep
-# )
-
 add_dependencies(${APP_NAME} BanubaOEP)
 
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
@@ -97,7 +93,6 @@ set_target_properties(${APP_NAME} PROPERTIES
 
 set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/bnb_sdk/mac/${FRAMEWORK_PATH}/BanubaEffectPlayer.framework PROPERTIES MACOSX_PACKAGE_LOCATION Frameworks)
 set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/bnb_sdk/mac/${FRAMEWORK_PATH}/BanubaPostprocess.framework PROPERTIES MACOSX_PACKAGE_LOCATION Frameworks)
-# set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/build/framework/${FRAMEWORK_PATH}/BanubaOEP.framework PROPERTIES MACOSX_PACKAGE_LOCATION Frameworks)
 
 target_link_libraries(${APP_NAME}
     "-framework Accelerate"
