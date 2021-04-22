@@ -17,9 +17,7 @@ mkdir -p "$frameworkOutputPath/Versions/A/Headers"
 /bin/ln -sfh "Versions/Current/lib$1.a" "$frameworkOutputPath/$1"
 
 # #copy 
-/bin/mv "$libOutputPath/lib$1.a" "$frameworkOutputPath/Versions/A/" #${libraryName}
-# /bin/mv "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/${PRODUCT_NAME}.a" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/${PRODUCT_NAME}"
-
+/bin/mv "$libOutputPath/lib$1.a" "$frameworkOutputPath/Versions/A/"
 
 while [ "${4}" != "" ]; do
  	fullfile="${4}"

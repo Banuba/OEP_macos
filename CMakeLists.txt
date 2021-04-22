@@ -13,7 +13,6 @@ set(BNB_THIRD_FOLDER ${CMAKE_CURRENT_LIST_DIR}/third)
 # Set to OFF to disable ffmpeg dependency (SDK should be built with disabled video_player also)
 set(BNB_VIDEO_PLAYER ON)
 
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/copy_libs.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/utils.cmake)
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/bnb_sdk)
@@ -76,11 +75,6 @@ endforeach()
 set_source_files_properties(${FullEPFrameworkPath} PROPERTIES MACOSX_PACKAGE_LOCATION Frameworks)
 set_source_files_properties(${FullPPFrameworkPath} PROPERTIES MACOSX_PACKAGE_LOCATION Frameworks)
 
-#set_target_properties(${APP_NAME} PROPERTIES XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "$(inherited)")
-
-# target_link_libraries(${APP_NAME}
-#     offscreen_ep
-# )
 add_dependencies(${APP_NAME} ${BANUBA_OEP_FRAMEWORK})
 
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
@@ -123,5 +117,3 @@ set_target_properties(${APP_NAME} PROPERTIES XCODE_ATTRIBUTE_OTHER_LDFLAGS "-F$<
 set_target_properties(${APP_NAME} PROPERTIES XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES")
 
 target_link_libraries(${APP_NAME} ${OTHER_LDFLAGS})
-
-copy_third(${APP_NAME})

@@ -2,22 +2,6 @@ set(FRAMEWORK_NAME "banuba_oep")
 
 set(CMAKE_XCODE_GENERATE_SCHEME YES)
 
-function(create_linking_flags result target)
-    
-    set(linking_flags "")
-    get_target_property(dependency ${target} LINK_LIBRARIES)    
-    foreach(item ${dependency})
-        # message(${item})
-        # message("${item}: ${${item}_public_headers}")
-        set(linking_flags "${linking_flags} -l${item} -L$<TARGET_FILE_DIR:${item}>")    
-    endforeach()
-
-    # return values
-    set(${result} ${linking_flags} PARENT_SCOPE)
-endfunction()
-
-# cmake_policy(SET CMP0079 NEW)
-
 file(GLOB_RECURSE srcs
     ${CMAKE_CURRENT_LIST_DIR}/oep/*.cpp
     ${CMAKE_CURRENT_LIST_DIR}/oep/*.m
