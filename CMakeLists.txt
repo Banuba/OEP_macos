@@ -32,9 +32,6 @@ add_custom_command(OUTPUT "${FullEPFrameworkPath}" COMMAND "")
 set(FullPPFrameworkPath "${SDK_FRAMEWORK_PATH}/$(CONFIGURATION)/BanubaPostprocess.framework")
 add_custom_command(OUTPUT "${FullPPFrameworkPath}" COMMAND "")
 
-
-#set_source_files_properties(${FullEPFrameworkPath} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-
 set(BANUBA_OEP_FRAMEWORK banuba_oep)
 
 

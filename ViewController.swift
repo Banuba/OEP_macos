@@ -26,7 +26,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     private let renderWidth: UInt = 1280
     private let renderHeight: UInt = 720
     private var effectLoaded = false
-    private let token = "WMHjeKZfQ8WJ0Z/zN2TAiTRKfEC8pkAjGbiOTzWJ+EKEs13Mtx58NWTUF6yDH+lup69EPkz0PqE="
+    private let token = <#place your token here#>
 
     override func viewDidLoad() {
         super.viewDidLoad()

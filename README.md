@@ -6,7 +6,7 @@ Quick start examples for integrating [Banuba SDK on macos](https://docs.banuba.c
 2. Copy `bnb_viewer_standalone/bnb_sdk/` into the `OEP_macos/bnb_sdk` dir:
     `bnb_viewer_standalone/bnb_sdk/` => `OEP_macos/bnb_sdk`
 3. Copy `bnb_viewer_standalone/third` files into the `OEP_macos/third` dir:
-    `bnb_viewer_standalone/third/glad` => `OEP_macos/third/glad`
+    `bnb_viewer_standalone/third/` => `OEP_macos/third`
 4. Copy and Paste your client token into the appropriate section of `OEP_macos/ViewController.swift`
 5. Generate project files by executing the following commands:
     ##### MacOS build:
@@ -34,9 +34,9 @@ Quick start examples for integrating [Banuba SDK on macos](https://docs.banuba.c
     - BanubaPostprocess
     - banuba_oep
 ![Alt text](/resources/images/2DB863E6-8769-43CF-BAD9-21872C4147DA_4_5005_c.jpeg?raw=true "Title")
-7. Add paths to the headers `banuba_oep.framework/Headers` in the `Build Settings` tab `Header Search...` option
+7. Add paths to the headers `banuba_oep.framework/Headers` in the `Build Settings` tab `Header Search Paths` option
 ![Alt text](/resources/images/EE331F32-85E8-4FDC-8818-3640F0315FEB_4_5005_c.jpeg?raw=true "Title")
-8. Add linker option `-lc++` to in the `Build Settings` tab
+8. Add linker flag `-lc++` to in the `Build Settings` tab `Other Linker Flags` option
 ![Alt text](/resources/images/613B7E40-66DA-4C65-9F44-5FAAF93760CB_4_5005_c.jpeg?raw=true "Title")
 9. Add in the `Build Phases` tab in `Copy Bundle Resources` path to effects(from `resources` directory)
 ![Alt text](/resources/images/3BAA3154-EF4F-4873-A694-AA25353AB950_4_5005_c.jpeg?raw=true "Title")
@@ -63,8 +63,5 @@ Contributions are what make the open source community such an amazing place to l
     - **utils**
         - **ogl_utils** - contains helper classes to work with Open GL
         - **utils** - сontains common helper classes such as thread_pool
+- **oep_framework** - contains build rules banuba_oep framework and BNBOffscreenEffectPlayer, which is a class for working with the effect player 
 - **ViewController.swift** - contains a pipeline of frames received from the camera and sent for processing the effect and the subsequent receipt of processed frames
-
-# Note
-
-For integration of the Offscreen Effect player to your application it is necessary to copy the offscreen_effect_player folder and implement interfaces for offscreen_render_target, or you can just reuse offscreen_render_target.
