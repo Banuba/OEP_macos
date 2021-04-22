@@ -22,6 +22,30 @@ Quick start examples for integrating [Banuba SDK on macos](https://docs.banuba.c
 8. Select target `example_mac`.
 9. Run build.
 
+# Integration of the banuba_oep framework into the Xcode project
+
+1. Follow the first 7 steps from "Getting Started".
+2. Select target `banuba_oep` and build(Release and Debug).
+3. Copy the assembly framework `banuba_oep.framework` to your application directory
+4. Copy the `bnb_sdk` to your application direcory
+5. Copy the `resources` to your application direcory
+6. Add in your project settings in the `General` tab in `Frameworks, Libraries, and Embedded Content` references to frameworks:
+    - Accelerate
+    - OpenGL
+    - BanubaEffectPlayer
+    - BanubaPostprocess
+    - banuba_oep
+![Alt text](/resources/images/2DB863E6-8769-43CF-BAD9-21872C4147DA_4_5005_c.jpeg?raw=true "Title")
+7. Add in the `Build Settings` tab paths to headers to `banuba_oep.framework/Headers`
+![Alt text](/resources/images/EE331F32-85E8-4FDC-8818-3640F0315FEB_4_5005_c.jpeg?raw=true "Title")
+8. Add in the `Build Settings` tab linker flag `-lc++`
+![Alt text](/resources/images/613B7E40-66DA-4C65-9F44-5FAAF93760CB_4_5005_c.jpeg?raw=true "Title")
+9. Add in the `Build Phases` tab in `Copy Bundle Resources` path to effects(from `resources` directory)
+![Alt text](/resources/images/3BAA3154-EF4F-4873-A694-AA25353AB950_4_5005_c.jpeg?raw=true "Title")
+10. Add or update bridging header, adding to it `#import "BNBOffscreenEffectPlayer.h"`
+
+These steps are enough for you to use in your project BNBOffscreenEffectPlayer.
+
 # Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.

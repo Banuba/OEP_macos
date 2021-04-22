@@ -13,11 +13,6 @@ set(BNB_THIRD_FOLDER ${CMAKE_CURRENT_LIST_DIR}/third)
 # Set to OFF to disable ffmpeg dependency (SDK should be built with disabled video_player also)
 set(BNB_VIDEO_PLAYER ON)
 
-add_definitions(
-    -DBNB_RESOURCES_FOLDER="${BNB_RESOURCES_FOLDER}"
-    -DBNB_VIDEO_PLAYER=$<BOOL:${BNB_VIDEO_PLAYER}>
-)
-
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/copy_libs.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/utils.cmake)
 
@@ -29,13 +24,20 @@ add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/offscreen_render_target)
 
 option(DEPLOY_BUILD "Build for deployment" OFF)
 
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(FRAMEWORK_PATH "debug")
-else()
-    set(FRAMEWORK_PATH "release")
-endif()
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/oep_framework)
 
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/framework)
+# some magic to add these files to copy phase
+set(SDK_FRAMEWORK_PATH "${CMAKE_CURRENT_LIST_DIR}/bnb_sdk/mac")
+set(FullEPFrameworkPath "${SDK_FRAMEWORK_PATH}/$(CONFIGURATION)/BanubaEffectPlayer.framework")
+add_custom_command(OUTPUT "${FullEPFrameworkPath}" COMMAND "")
+set(FullPPFrameworkPath "${SDK_FRAMEWORK_PATH}/$(CONFIGURATION)/BanubaPostprocess.framework")
+add_custom_command(OUTPUT "${FullPPFrameworkPath}" COMMAND "")
+
+
+#set_source_files_properties(${FullEPFrameworkPath} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+
+set(BANUBA_OEP_FRAMEWORK banuba_oep)
+
 
 set(APP_NAME "example_mac") 
 
@@ -54,18 +56,32 @@ set(APP_SOURCE_FILES
 set(RESOURCES
     ${BNB_RESOURCES_FOLDER}/Main.storyboard
     ${BNB_RESOURCES_FOLDER}/bnb_viewer.icns
+    ${BNB_RESOURCES_FOLDER}/effects
 )
+
+set(CMAKE_XCODE_GENERATE_SCHEME YES)
 
 add_executable(${APP_NAME}
     MACOSX_BUNDLE
-    ${CMAKE_CURRENT_LIST_DIR}/bnb_sdk/mac/${FRAMEWORK_PATH}/BanubaEffectPlayer.framework
-    ${CMAKE_CURRENT_LIST_DIR}/bnb_sdk/mac/${FRAMEWORK_PATH}/BanubaPostprocess.framework
     ${APP_HEADER_FILES}
     ${APP_SOURCE_FILES}
     ${RESOURCES}
+    ${FullEPFrameworkPath}
+    ${FullPPFrameworkPath}
 )
 
-add_dependencies(${APP_NAME} BanubaOEP)
+foreach(assetItem ${RESOURCES})
+  set_source_files_properties(${assetItem} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)   
+endforeach()
+set_source_files_properties(${FullEPFrameworkPath} PROPERTIES MACOSX_PACKAGE_LOCATION Frameworks)
+set_source_files_properties(${FullPPFrameworkPath} PROPERTIES MACOSX_PACKAGE_LOCATION Frameworks)
+
+#set_target_properties(${APP_NAME} PROPERTIES XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "$(inherited)")
+
+# target_link_libraries(${APP_NAME}
+#     offscreen_ep
+# )
+add_dependencies(${APP_NAME} ${BANUBA_OEP_FRAMEWORK})
 
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
 
@@ -91,9 +107,6 @@ set_target_properties(${APP_NAME} PROPERTIES
     XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY ""
 )
 
-set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/bnb_sdk/mac/${FRAMEWORK_PATH}/BanubaEffectPlayer.framework PROPERTIES MACOSX_PACKAGE_LOCATION Frameworks)
-set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/bnb_sdk/mac/${FRAMEWORK_PATH}/BanubaPostprocess.framework PROPERTIES MACOSX_PACKAGE_LOCATION Frameworks)
-
 target_link_libraries(${APP_NAME}
     "-framework Accelerate"
     "-framework Cocoa"
@@ -101,17 +114,13 @@ target_link_libraries(${APP_NAME}
     "-framework OpenGL"
     "-framework BanubaEffectPlayer"
     "-framework BanubaPostprocess"
-    "-framework BanubaOEP"
+    "-framework ${BANUBA_OEP_FRAMEWORK}"
 )
 
-set(OTHER_LDFLAGS ${OTHER_LDFLAGS} "-L ${CMAKE_CURRENT_LIST_DIR}/build/framework/${FRAMEWORK_PATH}/BanubaOEP.framework"
-                                "-lc++"
-                                "-lobjc"
-                                "-F ${CMAKE_CURRENT_LIST_DIR}/bnb_sdk/mac/${FRAMEWORK_PATH}"
-                                "-F ${CMAKE_CURRENT_LIST_DIR}/build/framework/${FRAMEWORK_PATH}"
-)
-
-set_target_properties(${APP_NAME} PROPERTIES XCODE_ATTRIBUTE_HEADER_SEARCH_PATHS "${CMAKE_CURRENT_LIST_DIR}/build/framework/${FRAMEWORK_PATH}/BanubaOEP.framework/Headers")
+set_target_properties(${APP_NAME} PROPERTIES XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${SDK_FRAMEWORK_PATH}/$<IF:$<CONFIG:Debug>,debug,release>")
+set_target_properties(${APP_NAME} PROPERTIES XCODE_ATTRIBUTE_HEADER_SEARCH_PATHS "$<TARGET_FILE_DIR:${BANUBA_OEP_FRAMEWORK}>/${BANUBA_OEP_FRAMEWORK}.framework/Headers")
+set_target_properties(${APP_NAME} PROPERTIES XCODE_ATTRIBUTE_OTHER_LDFLAGS "-F$<TARGET_FILE_DIR:${BANUBA_OEP_FRAMEWORK}> -lc++")
+set_target_properties(${APP_NAME} PROPERTIES XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES")
 
 target_link_libraries(${APP_NAME} ${OTHER_LDFLAGS})
 

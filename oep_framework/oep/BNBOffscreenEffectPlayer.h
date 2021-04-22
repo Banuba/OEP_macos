@@ -21,7 +21,7 @@ typedef void (^BNBOEPImageReadyBlock)(_Nullable CVPixelBufferRef pixelBuffer);
                        height:(NSUInteger)height
                   manualAudio:(BOOL)manual
                         token:(NSString*)token
-                 resursFolder:(NSString*)resursFolder;
+                resourcePaths:(nonnull NSArray<NSString *> *)resourcePaths;
 
 // /**
 //  * Async processImage method
